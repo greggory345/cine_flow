@@ -115,9 +115,9 @@ body.dark-theme {
 }
 
 .logo-flow {
-  background: var(--accent-gradient);
+  color: var(--text-white);
   /* -webkit-background-clip: text; */
-  -webkit-text-fill-color: transparent;
+  /* -webkit-text-fill-color: transparent; */
 }
 
 .domain-tag {
