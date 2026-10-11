@@ -273,7 +273,7 @@ body.dark-theme {
 .hero-gradient-overlay {
   position: absolute;
   inset: 0;
-  background: 
+  background:
     linear-gradient(90deg, #07090e 0%, rgba(7, 9, 14, 0.85) 45%, rgba(7, 9, 14, 0.25) 100%),
     linear-gradient(180deg, transparent 60%, #07090e 100%);
   z-index: 2;
@@ -311,9 +311,20 @@ body.dark-theme {
 }
 
 @keyframes pulse {
-  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 42, 95, 0.7); }
-  70% { transform: scale(1.15); box-shadow: 0 0 0 8px rgba(255, 42, 95, 0); }
-  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 42, 95, 0); }
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(255, 42, 95, 0.7);
+  }
+
+  70% {
+    transform: scale(1.15);
+    box-shadow: 0 0 0 8px rgba(255, 42, 95, 0);
+  }
+
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(255, 42, 95, 0);
+  }
 }
 
 .hero-title {
@@ -695,8 +706,13 @@ body.dark-theme {
 }
 
 @keyframes skeletonShimmer {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
 }
 
 /* Empty State */
@@ -751,7 +767,11 @@ body.dark-theme {
   max-width: 900px;
   width: 100%;
   max-height: 90vh;
+
+  /* FIX: Prevent horizontal content from escaping the modal */
   overflow-y: auto;
+  overflow-x: hidden;
+
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
 }
 
@@ -805,6 +825,11 @@ body.dark-theme {
   margin-top: -80px;
   position: relative;
   z-index: 2;
+
+  /* FIX: Prevent grid from creating horizontal overflow */
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
 }
 
 /* Modal Poster - ALWAYS visible on all device screens */
@@ -824,9 +849,14 @@ body.dark-theme {
   background: #1e293b;
 }
 
+/* FIX: Modal information must stay inside available width */
 .modal-info {
   display: flex;
   flex-direction: column;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
 }
 
 .modal-badges {
@@ -843,6 +873,8 @@ body.dark-theme {
   line-height: 1.15;
   margin-bottom: 0.35rem;
   color: var(--text-white);
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }
 
 /* Explicit Name & Title Display */
@@ -853,6 +885,9 @@ body.dark-theme {
   margin-bottom: 0.85rem;
   font-size: 1rem;
   color: #e2e8f0;
+  min-width: 0;
+  max-width: 100%;
+  flex-wrap: wrap;
 }
 
 .prop-badge-label {
@@ -870,12 +905,15 @@ body.dark-theme {
   gap: 0.6rem;
   margin-bottom: 1.25rem;
   flex-wrap: wrap;
+  max-width: 100%;
 }
 
 .genres-list {
   display: flex;
   gap: 0.45rem;
   flex-wrap: wrap;
+  min-width: 0;
+  max-width: 100%;
 }
 
 .genre-pill {
@@ -892,6 +930,12 @@ body.dark-theme {
 /* Overview */
 .modal-overview-section {
   margin-bottom: 1.5rem;
+
+  /* FIX: Keep overview inside modal */
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
 }
 
 .modal-overview-section h4 {
@@ -906,6 +950,15 @@ body.dark-theme {
   color: #cbd5e1;
   font-size: 0.95rem;
   line-height: 1.7;
+
+  /* FIX: Force long synopsis text to wrap */
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  white-space: normal;
 }
 
 /* Explicit Properties Summary Grid (All 8 Attributes Highlighted) */
@@ -915,6 +968,10 @@ body.dark-theme {
   border-radius: var(--radius-md);
   padding: 1.25rem;
   margin-bottom: 1.75rem;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  min-width: 0;
 }
 
 .attributes-title {
@@ -930,6 +987,9 @@ body.dark-theme {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 0.85rem;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
 }
 
 .prop-card {
@@ -939,6 +999,7 @@ body.dark-theme {
   padding: 0.65rem 0.85rem;
   border-radius: var(--radius-sm);
   border: 1px solid rgba(255, 255, 255, 0.06);
+  min-width: 0;
 }
 
 .prop-card-label {
@@ -992,8 +1053,13 @@ body.dark-theme {
 }
 
 @keyframes slideLeft {
-  from { transform: translateX(100%); }
-  to { transform: translateX(0); }
+  from {
+    transform: translateX(100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
 }
 
 .drawer-header {
@@ -1105,8 +1171,15 @@ body.dark-theme {
 }
 
 @keyframes toastFadeIn {
-  from { transform: translateY(20px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 /* 10. Footer */
@@ -1211,24 +1284,30 @@ body.dark-theme {
 
 /* A. Tablets & Small Laptops (max-width: 1024px) */
 @media (max-width: 1024px) {
+
   .nav-container {
     padding: 0 1.5rem;
   }
+
   .hero-section {
     padding: 3rem 1.5rem;
     min-height: 70vh;
   }
+
   .hero-content {
     margin-left: 0;
     max-width: 600px;
   }
+
   .hero-poster-wrapper {
-    display: none; /* Hero poster hidden on smaller screens to prioritize title & synopsis */
+    display: none;
   }
+
   .movies-grid {
     grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
     gap: 1.25rem;
   }
+
   .modal-content-grid {
     grid-template-columns: 200px 1fr;
     gap: 1.5rem;
@@ -1238,38 +1317,47 @@ body.dark-theme {
 
 /* B. Tablets, Phablets & Large Phones (max-width: 768px) */
 @media (max-width: 768px) {
+
   .navbar {
     height: 68px;
   }
+
   .nav-container {
     padding: 0 1rem;
     gap: 0.75rem;
   }
+
   .domain-tag {
     display: none;
   }
+
   .nav-pill {
-    display: none; /* Switch to catalog pills on mobile */
+    display: none;
   }
+
   .search-box {
     max-width: 280px;
   }
+
   .hero-section {
     margin-top: 68px;
     padding: 2.5rem 1rem;
     min-height: auto;
   }
+
   .hero-title {
     font-size: 2.2rem;
   }
+
   .hero-overview {
     font-size: 0.95rem;
-    /* -webkit-line-clamp: 4; */
   }
+
   .hero-actions {
     flex-direction: column;
     align-items: stretch;
   }
+
   .hero-actions .btn {
     width: 100%;
   }
@@ -1281,12 +1369,14 @@ body.dark-theme {
     gap: 1rem;
     margin-bottom: 1.5rem;
   }
+
   .catalog-controls {
     width: 100%;
     flex-direction: column;
     align-items: stretch;
     gap: 0.75rem;
   }
+
   .filter-pills {
     width: 100%;
     overflow-x: auto;
@@ -1295,87 +1385,162 @@ body.dark-theme {
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
   }
+
   .filter-pills::-webkit-scrollbar {
     display: none;
   }
+
   .sort-wrapper {
     width: 100%;
   }
+
   .sort-select {
     width: 100%;
   }
 
-  /* Modal Responsive Layout (Poster remains prominent!) */
+  /* ============================================================
+     MODAL RESPONSIVE FIX
+     ============================================================ */
+
   .modal-content-grid {
     display: flex;
     flex-direction: column;
+
+    /* FIX: Keep poster centered but allow information to stretch */
     align-items: center;
+
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+
     margin-top: -60px;
     padding: 0 1.5rem 1.75rem;
     gap: 1.25rem;
   }
+
   .modal-poster-wrap {
     width: 170px;
     max-width: 55%;
   }
+
+  /* FIX: Make the information section full width */
+  .modal-info {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    align-self: stretch;
+  }
+
   .modal-title {
     font-size: 1.75rem;
     text-align: center;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
   }
+
   .modal-name-tag {
     justify-content: center;
     text-align: center;
+    max-width: 100%;
   }
+
   .modal-badges {
     justify-content: center;
   }
+
   .modal-genres-container {
     justify-content: center;
+    width: 100%;
+    max-width: 100%;
   }
+
+  .genres-list {
+    justify-content: center;
+    max-width: 100%;
+  }
+
+  /* FIX: Synopsis takes full available width */
+  .modal-overview-section {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  .modal-overview {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    white-space: normal;
+  }
+
+  .modal-attributes-box {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
   .modal-props-grid {
     grid-template-columns: repeat(2, 1fr);
+    width: 100%;
+    max-width: 100%;
   }
+
   .footer-links {
     gap: 2rem;
     flex-direction: column;
   }
 }
 
-/* C. Standard Mobile Screens (max-width: 540px) (e.g. iPhone 14/15/16, Galaxy S22/S23/S24) */
+/* C. Standard Mobile Screens (max-width: 540px) */
 @media (max-width: 540px) {
+
   .navbar {
     height: 62px;
   }
+
   .nav-container {
     padding: 0 0.75rem;
     gap: 0.5rem;
   }
+
   .brand-logo .logo-icon {
     width: 32px;
     height: 32px;
   }
+
   .brand-logo .logo-text {
     font-size: 1.25rem;
   }
+
   .search-box {
     flex: 1;
     min-width: 0;
   }
+
   .search-box input {
     padding: 0.5rem 1.75rem 0.5rem 2rem;
     font-size: 0.8rem;
   }
+
   .search-icon {
     left: 8px;
     width: 15px;
     height: 15px;
   }
+
   .watchlist-btn {
     padding: 0.45rem 0.65rem;
     font-size: 0.8rem;
   }
+
   .watchlist-btn span:not(.watchlist-count) {
-    display: none; /* Show icon + count badge only on small mobile */
+    display: none;
   }
 
   /* Hero */
@@ -1383,18 +1548,22 @@ body.dark-theme {
     margin-top: 62px;
     padding: 2rem 0.85rem;
   }
+
   .hero-badge {
     font-size: 0.72rem;
     padding: 0.25rem 0.65rem;
   }
+
   .hero-title {
     font-size: 1.75rem;
     line-height: 1.18;
   }
+
   .meta-tag {
     font-size: 0.72rem;
     padding: 0.2rem 0.5rem;
   }
+
   .hero-overview {
     font-size: 0.88rem;
     line-height: 1.55;
@@ -1405,38 +1574,46 @@ body.dark-theme {
   .main-container {
     padding: 1.75rem 0.85rem;
   }
+
   .section-title {
     font-size: 1.4rem;
   }
+
   .movies-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 0.85rem;
   }
+
   .movie-card {
     border-radius: var(--radius-sm);
   }
+
   .card-info {
     padding: 0.65rem;
   }
+
   .card-title {
     font-size: 0.85rem;
     white-space: normal;
     display: -webkit-box;
-   /* -webkit-line-clamp : 2; */
+    /* -webkit-line-clamp: 2; */
     -webkit-box-orient: vertical;
     overflow: hidden;
     line-height: 1.3;
     height: 2.2rem;
   }
+
   .card-meta {
     font-size: 0.72rem;
   }
+
   .card-rating-badge {
     top: 6px;
     right: 6px;
     font-size: 0.68rem;
     padding: 0.15rem 0.4rem;
   }
+
   .card-type-badge {
     top: 6px;
     left: 6px;
@@ -1448,10 +1625,18 @@ body.dark-theme {
   .modal-overlay {
     padding: 0.75rem;
   }
+
   .modal-card {
+    width: 100%;
+    max-width: 100%;
     max-height: 94vh;
     border-radius: var(--radius-lg);
+
+    /* FIX: No horizontal overflow */
+    overflow-x: hidden;
+    overflow-y: auto;
   }
+
   .modal-close-btn {
     top: 10px;
     right: 10px;
@@ -1459,48 +1644,93 @@ body.dark-theme {
     height: 34px;
     font-size: 0.95rem;
   }
+
   .modal-backdrop-wrap {
     height: 150px;
   }
+
   .modal-content-grid {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+
     margin-top: -50px;
     padding: 0 1rem 1.25rem;
     gap: 1rem;
   }
+
   .modal-poster-wrap {
     width: 135px;
+    max-width: 55%;
   }
+
+  .modal-info {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    align-self: stretch;
+  }
+
   .modal-title {
     font-size: 1.45rem;
+    width: 100%;
+    max-width: 100%;
   }
+
   .modal-name-tag {
     font-size: 0.88rem;
+    max-width: 100%;
   }
+
   .genre-pill {
     font-size: 0.7rem;
     padding: 0.2rem 0.55rem;
   }
+
+  .modal-overview-section {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
   .modal-overview {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
     font-size: 0.88rem;
     line-height: 1.6;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    white-space: normal;
   }
+
   .modal-attributes-box {
     padding: 0.85rem;
+    width: 100%;
+    max-width: 100%;
   }
+
   .modal-props-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 0.5rem;
+    width: 100%;
+    max-width: 100%;
   }
+
   .prop-card {
     padding: 0.5rem 0.65rem;
+    min-width: 0;
   }
+
   .prop-card-val {
     font-size: 0.82rem;
   }
+
   .modal-actions {
     flex-direction: column;
     gap: 0.6rem;
   }
+
   .modal-actions .btn {
     width: 100%;
     padding: 0.75rem 1rem;
@@ -1515,32 +1745,48 @@ body.dark-theme {
   }
 }
 
-/* D. Extra-Small Mobile Screens (max-width: 380px) (e.g. iPhone SE, Foldable Cover Screens) */
+/* D. Extra-Small Mobile Screens (max-width: 380px) */
 @media (max-width: 380px) {
+
   .brand-logo .logo-text {
     font-size: 1.1rem;
   }
+
   .brand-logo .logo-icon {
     width: 28px;
     height: 28px;
   }
+
   .hero-title {
     font-size: 1.5rem;
   }
+
   .movies-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 0.6rem;
   }
+
   .modal-poster-wrap {
     width: 115px;
   }
+
   .modal-title {
     font-size: 1.25rem;
   }
+
   /* Single column for properties grid on ultra compact screens */
   .modal-props-grid {
     grid-template-columns: 1fr;
     gap: 0.45rem;
   }
-}
 
+  /* Extra-small screen synopsis protection */
+  .modal-overview {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    white-space: normal;
+  }
+}
